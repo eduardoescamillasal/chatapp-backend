@@ -15,7 +15,7 @@ import cookierSession from "cookie-session";
 import HTTP_STATUS from "http-status-codes";
 import "express-async-errors";
 
-const SERVER_PORT = 5000;
+const SERVER_PORT = 5009;
 
 export class ChatAppServer {
   private app: Application;
