@@ -1,0 +1,11 @@
+{
+  "name": "chatapp-backend",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {},
+  "author": "eduardo escamilla",
+  "license": "ISC",
+  "dependencies": {
+    "typescript": "^5.7.3"
+  }
+}
