@@ -16,6 +16,7 @@ import HTTP_STATUS from "http-status-codes";
 import { Server } from "socket.io";
 import { createClient } from "redis";
 import { createAdapter } from "@socket.io/redis-adapter";
+import Logger from "bunyan";
 import "express-async-errors";
 import { config } from "./config";
 import applicationRoutes from "./routes";
@@ -25,6 +26,7 @@ import {
 } from "./shared/globals/helpers/error-handler";
 
 const SERVER_PORT = 5009;
+const log: Logger = config.createLogger("server");
 
 export class ChatAppServer {
   private app: Application;
@@ -86,7 +88,7 @@ export class ChatAppServer {
         res: Response,
         next: NextFunction
       ): any => {
-        console.log(error);
+        log.error(error);
         if (error instanceof CustomError) {
           return res.status(error.statusCode).json(error.serializeErrors());
         }
@@ -102,7 +104,7 @@ export class ChatAppServer {
       this.startHttpServer(httpServer);
       this.socketIOConnections(socketIO);
     } catch (error) {
-      console.log(error);
+      log.error(error);
     }
   }
 
@@ -121,9 +123,9 @@ export class ChatAppServer {
   }
 
   private startHttpServer(httpServer: http.Server): void {
-    console.log(`Server has started with process ${process.pid}`);
+    log.info(`Server has started with process ${process.pid}`);
     httpServer.listen(SERVER_PORT, () =>
-      console.log(`Server running on port ${SERVER_PORT}`)
+      log.info(`Server running on port ${SERVER_PORT}`)
     );
   }
 
